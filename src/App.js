@@ -1,22 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import convert from "./binary";
+import { useEffect } from "react";
 
 function App() {
+  const [binary, setBinary] = useState("");
+  const [number, setNumber] = useState("");
+
+  useEffect(() => {
+    if (binary.length === 0) {
+      setNumber("");
+    } else {
+      setNumber(convert(binary));
+    }
+  }, [binary]);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+
+        <input
+          type="number"
+          value={binary}
+          onChange={(e) => setBinary(e.target.value)}
+        />
+
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <code>
+            {binary} {number}
+          </code>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        <button
+          onClick={() => {
+            setNumber(convert(binary));
+          }}
         >
-          Learn React
-        </a>
+          Convert Binary to Decimal
+        </button>
       </header>
     </div>
   );
